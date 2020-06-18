@@ -20,7 +20,7 @@ $(function () {
           cities = citiesList;
           renderList();
         }
-        alert(cities);
+        //alert(cities);
         
 
     }
@@ -38,7 +38,7 @@ $(function () {
 
             //assign the input element into cityName variable
             var cityName = $("#search-value").val().trim();
-            alert("at click: "+ cityName);
+            //alert("at click: "+ cityName);
 
             //if input is empty return
             if (cityName === "") {
@@ -50,7 +50,7 @@ $(function () {
             
                 //add the cityName to the array
                 if (!cities.includes(cityName)) cities.push(cityName);
-                alert("Array: " + cities);
+                //alert("Array: " + cities);
 
                 //after the element is added to the array, 
                 //display the cityname in a list by called renderLastItem
@@ -76,7 +76,7 @@ $(function () {
         // Render a new li for each cityName
         for (var i = 0; i < cities.length; i++) {
           var city = cities[i];
-          alert("renderList: " + city);
+          //alert("renderList: " + city);
           
          //create a line item add the cityName and append to the ul parent
          //if (!cities.includes(city)){
