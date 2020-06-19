@@ -71,6 +71,7 @@ $(function () {
         weatherForecast($(this).text());
     });
 
+    //display line items when fetched from localStorage
     function renderList() {
       
         // Render a new li for each cityName
@@ -79,23 +80,21 @@ $(function () {
           //alert("renderList: " + city);
           
          //create a line item add the cityName and append to the ul parent
-         //if (!cities.includes(city)){
+
          $("<li>").text(city).css('text-transform', 'capitalize').addClass("list-group-item").appendTo(".history");
 
-         $("#search-value").val('');
-
-         //}
 
         }
       }
 
+      //
       function renderLastItem(city) {
       
          
          //create a line item add the cityName and append to the ul parent
          $("<li>").text(city).css('text-transform', 'capitalize').addClass("list-group-item").appendTo(".history");
-         //.attr("data-index", i)
 
+         //clear text from input when li item added to the list
          $("#search-value").val('');
 
       }
@@ -116,8 +115,6 @@ $(function () {
             console.log(response);
 
             $("#today").empty();
-
-            //$("<h2>").text(city + " " + (moment.unix(response.dt)).format("MM/DD/YYYY")).css('text-transform', 'capitalize').appendTo("#today");
 
             $("<div>").html("<h2>"+city + ' ' + (moment.unix(response.dt)).format('MM/DD/YYYY') + "<img src='http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png'>"+"<h2>").css('text-transform', 'capitalize').appendTo('#today');
         
@@ -142,21 +139,15 @@ $(function () {
                 //var uvBox = $("<span>").addClass("btn").text(response.value).appendTo(uvVal);
                 
                 if (response.value > 6){
-
                     $("<span>").addClass("btn-sm btn-danger").text(response.value).appendTo(uvVal);
-
                 }
 
                 else if (response.value < 2){
-
                     $("<span>").addClass("btn-sm btn-success").text(response.value).appendTo(uvVal);
-
                 }
 
                 else {
-
                     $("<span>").addClass("btn-sm btn-warning").text(response.value).appendTo(uvVal);
-
                 }
             });
 
