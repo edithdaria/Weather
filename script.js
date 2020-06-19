@@ -137,7 +137,27 @@ $(function () {
                 method: "GET"
             }).then(function (response) {
                 console.log(response);
-                $("<p>").text("UV Index: " + response.value).appendTo("#today");
+                var uvVal = $("<p>").text("UV Index: ").appendTo("#today");
+
+                //var uvBox = $("<span>").addClass("btn").text(response.value).appendTo(uvVal);
+                
+                if (response.value > 6){
+
+                    $("<span>").addClass("btn-sm btn-danger").text(response.value).appendTo(uvVal);
+
+                }
+
+                else if (response.value < 2){
+
+                    $("<span>").addClass("btn-sm btn-success").text(response.value).appendTo(uvVal);
+
+                }
+
+                else {
+
+                    $("<span>").addClass("btn-sm btn-warning").text(response.value).appendTo(uvVal);
+
+                }
             });
 
 
