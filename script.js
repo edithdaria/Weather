@@ -56,18 +56,20 @@ $(function () {
                 //display the cityname in a list by called renderLastItem
                 renderLastItem(cityName);
                 storeTodo();
-           
-              }
+
+                
+            currentWeather(cityName)
+        }
+              
 
 
-            currentWeather(cityName);
-            weatherForecast(cityName);
 
         }
     });
 
     $("ul.history").on ("click", "li", function() {
         currentWeather($(this).text());
+        console.log($(this).text());
         weatherForecast($(this).text());
     });
 
@@ -149,48 +151,38 @@ $(function () {
                 else {
                     $("<span>").addClass("btn-sm btn-warning").text(response.value).appendTo(uvVal);
                 }
+                $.ajax({
+                    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=18722e52d22f44fcb7ed72b0b4635c56&units=imperial",
+                    method: "GET"
+                }).then(function (response) {
+        
+                    $("#forecast").empty();
+        
+                    $("#forecast").addClass("row");
+        
+                    $("<div>").html("<h2>5-day Forecast: <h2>").appendTo("#forecast").addClass("col-xs-12 col-sm-12 col-md-12");
+        
+                    for (var i = 0; i < response.list.length; i++) {
+        
+                        if (response.list[i].dt_txt.indexOf("12:00:00") !== -1) {
+        
+        
+                            var card = $("<div>").addClass("col-xs-2 col-sm-2 col-md-2 col-lg-2 card text-white bg-primary m-2 p-2").text((moment.unix(response.list[i].dt)).format("MM/DD/YYYY")).appendTo("#forecast");
+                            $("<img>").attr("src","http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png").appendTo(card);
+                            $("<p>").text("Temp: " + response.list[i].main.temp + String.fromCharCode(176) + "F").appendTo(card);
+                            $("<p>").text("Humidity: " + response.list[i].main.humidity + "%").appendTo(card);
+                        }
+                    }    
+                });  
             });
 
-
-        });
-
-    }
-
-
-    function weatherForecast(city){
-
-        $.ajax({
-            url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=18722e52d22f44fcb7ed72b0b4635c56&units=imperial",
-            method: "GET"
-        }).then(function (response) {
-
-            $("#forecast").empty();
-
-            $("#forecast").addClass("row");
-
-            $("<div>").html("<h2>5-day Forecast: <h2>").appendTo("#forecast").addClass("col-xs-12 col-sm-12 col-md-12");
-
-            for (var i = 0; i < response.list.length; i++) {
-
-                if (response.list[i].dt_txt.indexOf("12:00:00") !== -1) {
-
-
-                    var card = $("<div>").addClass("col-xs-2 col-sm-2 col-md-2 col-lg-2 card text-white bg-primary m-2 p-2").text((moment.unix(response.list[i].dt)).format("MM/DD/YYYY")).appendTo("#forecast");
-                    $("<img>").attr("src","http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png").appendTo(card);
-                    $("<p>").text("Temp: " + response.list[i].main.temp + String.fromCharCode(176) + "F").appendTo(card);
-                    $("<p>").text("Humidity: " + response.list[i].main.humidity + "%").appendTo(card);
-
-                }
-
-            }
-
-            
         });
 
 
-
-
-    }
-
+    }  
 
 });
+
+
+
+       
